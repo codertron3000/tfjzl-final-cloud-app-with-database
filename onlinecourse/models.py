@@ -97,9 +97,12 @@ class Enrollment(models.Model):
 
 #Model for course quesion
 class Question(models.Model):
-    course = models.ForeignKey(Course, related_name='course_question', on_delete=models.CASCADE)
-    content = models.CharField(max_length=100)
-    grade = models.IntegerField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    content = models.CharField(max_length=200)
+    grade = models.IntegerField(default=50)
+    
+    def __str__(self):
+        return ("Question: " + self.content)
     
     # method to calculate if the learner gets the score of the question
     def is_get_score(self, selected_ids):
@@ -110,14 +113,11 @@ class Question(models.Model):
         else:
             return False
 
-    def __str__(self):
-        return ("Question: " + self.content)
-
 
 #Choice Model saves choices of a question
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    content = models.CharField(max_length=100)
+    content = models.CharField(max_length=200)
     is_correct = models.BooleanField(default=False)
 
 
